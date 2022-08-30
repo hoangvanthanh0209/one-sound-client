@@ -1,0 +1,5 @@
+export { default as Home } from './Home/Home'
+export { default as Playlist } from './Playlist/Playlist'
+export { default as Artist } from './Artist/Artist'
+export { default as Authentication } from './Authentication/Authentication'
+export { default as Profile } from './Profile/Profile'
