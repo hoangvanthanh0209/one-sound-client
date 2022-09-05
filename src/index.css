@@ -129,7 +129,7 @@ html *::-webkit-scrollbar-track {
     top: -20px;
     right: 10px;
     border: 10px solid;
-    border-color: transparent transparent var(--bg-38-color) transparent;
+    border-color: transparent transparent #383838 transparent;
 }
 
 .btn-menu-profile-header::before {
@@ -144,15 +144,13 @@ html *::-webkit-scrollbar-track {
 }
 
 :root {
-    --w-sidebar: 320px;
+    /* --w-sidebar: 320px;
     --w-header: calc(100% - var(--w-sidebar));
     --w-container: calc(100% - var(--w-sidebar));
     --w-music-player-list-song: calc(var(--w-container) - 10px);
 
     --h-header: 64px;
     --h-music-player: 100px;
-    --h-container: calc(100% - var(--h-header));
-    /* --h-header-content: 320px; */
     --h-header-content: calc(340px - var(--h-header));
     --h-bg-header-content: calc(var(--h-header-content) + var(--h-header));
     --h-bg-middle-content: calc(var(--h-bg-header-content) - var(--h-header));
@@ -163,9 +161,7 @@ html *::-webkit-scrollbar-track {
 
     --spacing-hidden-music-player-list-song: calc(var(--h-music-player-list-song) + var(--h-music-player) + 5px);
 
-    --t-music-player-list-song: calc(100vh - var(--h-header) - var(--h-music-player) - 5px);
-
-    --l-music-player-list-song: calc(var(--w-sidebar) + 5px);
+    
 
     --primary-color: #b3b3b3;
     --active-color: #1db954;
@@ -184,7 +180,40 @@ html *::-webkit-scrollbar-track {
     --bg-play-btn-color: #1ed760;
 
     --rgba-0-05-color: rgba(0, 0, 0, 0.5);
+    --rgba-0-05-color: rgba(0, 0, 0, 0.5); */
+
+    --w-sidebar: 320px;
+    --w-header: calc(100% - var(--w-sidebar));
+    --h-header: 64px;
+    --h-music-player: 90px;
+    --h-sidebar: calc(100vh - var(--h-music-player));
+    --min-h-container: calc(100vh - var(--h-music-player) - var(--h-music-player) - 81px);
+
+    --spacing-hidden-music-player-list-song: calc(var(--h-music-player-list-song) + var(--h-music-player) + 5px);
+    --t-music-player-list-song: calc(100vh - var(--h-header) - var(--h-music-player) - 5px);
+    --l-music-player-list-song: calc(var(--w-sidebar) + 5px);
+    --w-music-player-list-song: calc(100% - var(--w-sidebar) - 10px);
+    --h-music-player-list-song: calc(100vh - var(--h-header) - var(--h-music-player) - 10px);
+
+    --h-content: calc(100% + var(--h-header));
+    --h-header-content: calc(340px - var(--h-header));
+    --h-bg-header-content: calc(var(--h-header-content) + var(--h-header));
+    --h-bg-middle-content: calc(var(--h-bg-header-content) - var(--h-header));
+    --h-action-playlist: 104px;
+    --h-bg-body-content: calc(100% - var(--h-header-content));
+    --h-header-table: 36px;
+
+    --primary-color: #b3b3b3;
+    --bg-primary-color: #1c1c1c;
+    --active-color: #1db954;
+    --icon-verified-color: #3d91f4;
+    --bg-play-btn-color: #1ed760;
+    --line-color: #292929;
+
+    --rgba-0-03-color: rgba(0, 0, 0, 0.3);
     --rgba-0-05-color: rgba(0, 0, 0, 0.5);
+    --rgba-0-005-color: rgba(0, 0, 0, 0.05);
+    --rgba-0-07-color: rgba(0, 0, 0, 0.7);
 }
 
 @layer components {

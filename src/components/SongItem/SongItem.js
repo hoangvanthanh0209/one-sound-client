@@ -5,7 +5,7 @@ import avatar from '~/assets/images/avatar-default.jpg'
 
 function SongItem() {
     return (
-        <div className="song-row flex justify-center items-center w-full h-14 text-sm text-primary cursor-pointer hover:bg-28">
+        <div className="song-row flex justify-center items-center w-full h-14 text-sm text-primary cursor-pointer hover:bg-[#282828]">
             <div className="flex justify-center items-center relative w-1/12 h-full px-2">
                 <span className="song-row-number absolute select-none pointer-events-none">1</span>
                 <div

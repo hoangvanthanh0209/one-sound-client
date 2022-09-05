@@ -43,10 +43,18 @@ function SlideBar() {
                         <span className="text-sm font-medium">Me</span>
                     </Link>
                 </li>
+                <li className="sidebar-item py-2">
+                    <Link to="/me/info" className="sidebar-link flex items-center text-primary hover:text-white">
+                        <div className="w-6 h-6 mr-4">
+                            <FaBook className=" w-full h-full" />
+                        </div>
+                        <span className="text-sm font-medium">My info</span>
+                    </Link>
+                </li>
                 <li className="sidebar-item pt-8 pb-2">
                     <Link to="/" className="sidebar-link flex items-center text-primary hover:text-white">
                         <div className="sidebar-link-icon flex justify-center items-center bg-primary rounded-sm w-6 h-6 mr-4">
-                            <div className="w-3 h-3 text-icon-59">
+                            <div className="w-3 h-3 text-[#595959]">
                                 <FaPlus className="w-full h-full" />
                             </div>
                         </div>
@@ -56,7 +64,7 @@ function SlideBar() {
                 <li className="sidebar-item py-2">
                     <Link to="/" className="sidebar-link flex items-center text-primary hover:text-white">
                         <div className="sidebar-link-icon flex justify-center items-center bg-gradient-to-br from-violet-700 to-gray-400 opacity-70 rounded-sm w-6 h-6 mr-4">
-                            <div className="w-3 h-3 text-icon-b2">
+                            <div className="w-3 h-3 text-[#b2b2b2]">
                                 <FaHeart className="w-full h-full" />
                             </div>
                         </div>
@@ -64,7 +72,7 @@ function SlideBar() {
                     </Link>
                 </li>
                 <li>
-                    <div className="h-px opacity-80 bg-primary mt-2"></div>
+                    <div className="h-px opacity-80 bg-line mt-2"></div>
                 </li>
             </ul>
         </div>

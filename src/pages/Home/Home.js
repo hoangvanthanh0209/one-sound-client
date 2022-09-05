@@ -16,18 +16,13 @@ function Home() {
     }, [color])
 
     return (
-        <div className="relative">
-            <div className="absolute -top-h-header left-0 w-full h-full bg-1C z-[-1]"></div>
-            <div className="px-8 py-6">
-                <div className="flex flex-col gap-6 w-full">
-                    <DashBoard title="Recently played" data={data} />
-                    <DashBoard />
-                    <DashBoard />
-                    <DashBoard />
-                    <DashBoard />
-                    <DashBoard />
-                </div>
-            </div>
+        <div className="flex flex-col gap-6 w-full">
+            <DashBoard title="Recently played" data={data} />
+            <DashBoard />
+            <DashBoard />
+            <DashBoard />
+            <DashBoard />
+            <DashBoard />
         </div>
     )
 }

@@ -13,6 +13,7 @@ const ranColor = () => {
 
 const initialState = {
     color: 'rgb(0, 0, 0)',
+    isShowModal: false,
 }
 
 const configSlice = createSlice({
@@ -31,9 +32,21 @@ const configSlice = createSlice({
                 color: initialState.color,
             }
         },
+        showModal: (state) => {
+            return {
+                ...state,
+                isShowModal: true,
+            }
+        },
+        hiddenModal: (state) => {
+            return {
+                ...state,
+                isShowModal: false,
+            }
+        },
     },
 })
 
-export const { randomColor, resetColor } = configSlice.actions
+export const { randomColor, resetColor, showModal, hiddenModal } = configSlice.actions
 
 export default configSlice

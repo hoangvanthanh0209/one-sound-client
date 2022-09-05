@@ -38,10 +38,10 @@ function Header() {
     }, [scrollY])
 
     return (
-        <div className="flex justify-end items-center relative h-full px-8 py-4 bg-transparent">
+        <div className="flex justify-end items-center relative h-full px-16 py-4 bg-transparent">
             <div
                 ref={background}
-                className="absolute top-0 right-0 flex w-full h-full opacity-1 pointer-events-none -z-[2]"
+                className="absolute top-0 right-0 flex w-full h-full opacity-1 pointer-events-none -z-2"
             ></div>
             {user ? (
                 <div className="flex justify-center items-center gap-8">

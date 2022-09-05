@@ -14,9 +14,8 @@ function Playlist() {
     return (
         <div className="relative">
             <Background />
-
-            <div className="absolute top-h-header-content left-0 w-full h-h-bg-body-content bg-18 z-[-3]"></div>
-            <div className="px-8">
+            <div className="absolute top-h-header-content left-0 w-full h-h-bg-body-content bg-[#181818] -z-3"></div>
+            <div className="px-8 pb-6">
                 <ArtistHeader />
                 <div>
                     <ActionButton />

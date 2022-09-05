@@ -38,11 +38,11 @@ function ListSong() {
         <div className="w-full h-full">
             <div
                 ref={background}
-                className="fixed top-h-header right-0 flex w-w-container h-h-header-table bg-28 opacity-0 pointer-events-none z-[3]"
+                className="fixed top-h-header right-0 flex w-w-header h-h-header-table bg-[#282828] opacity-0 pointer-events-none z-3"
             ></div>
             <div
                 ref={header}
-                className="flex justify-center items-center sticky top-h-header w-full h-h-header-table text-sm text-primary uppercase border-b border-primary z-[3] "
+                className="flex justify-center items-center sticky top-h-header w-full h-h-header-table text-sm text-primary uppercase border-b border-primary z-3"
             >
                 <div className="flex justify-center items-center w-1/12 h-full px-2">
                     <span>#</span>

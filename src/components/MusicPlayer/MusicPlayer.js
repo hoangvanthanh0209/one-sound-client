@@ -74,12 +74,12 @@ function MusicPlayer() {
     // }, [timeSong, volumn])
 
     return (
-        <div className="flex items-center relative bg-18 h-h-music-player px-4">
+        <div className="flex items-center relative bg-[#181818] h-full px-4">
             <div
                 ref={bgRef}
-                className="list-song-custom absolute -top-t-music-player-list-song left-l-music-player-list-song w-w-music-player-list-song h-h-music-player-list-song bg-1C overflow-hidden translate-y-spacing-hidden-music-player-list-song z-50"
+                className="list-song-custom absolute -top-t-music-player-list-song left-l-music-player-list-song w-w-music-player-list-song h-h-music-player-list-song bg-[#1C1C1C] overflow-hidden translate-y-spacing-hidden-music-player-list-song"
             >
-                <div className="px-8 w-full h-full z-50">
+                <div className="px-8 w-full h-full">
                     <div>
                         <span className="text-primary font-medium">Now playing</span>
                         <SongItem />
@@ -110,7 +110,7 @@ function MusicPlayer() {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between items-center w-full z-10">
+            <div className="flex justify-between items-center w-full">
                 <div className="flex justify-start items-center w-1/4 overflow-hidden">
                     <div className="w-14 h-14">
                         <img src={avatar} alt="" className="w-full h-full object-cover" />
