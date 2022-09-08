@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { FaRegClock } from 'react-icons/fa'
 
-import SongItem from '../SongItem/SongItem'
+import { SongItem } from '~/components'
 
 function ListSong() {
     const [scrollY, setScrollY] = useState(0)

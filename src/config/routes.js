@@ -5,8 +5,9 @@ const routes = {
     playlist: '/playlist',
     artist: '/artist',
     me: '/me',
-    info: '/me/info',
     layout: '/layout',
+    myplaylist: '/me/playlist',
+    mysong: '/me/playlist/:playlistId',
 }
 
 export default routes

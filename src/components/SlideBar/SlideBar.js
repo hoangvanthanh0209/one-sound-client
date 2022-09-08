@@ -20,7 +20,7 @@ function SlideBar() {
                     </Link>
                 </li>
                 <li className="sidebar-item py-2">
-                    <Link to="/playlist" className="sidebar-link flex items-center text-primary hover:text-white">
+                    <Link to="/" className="sidebar-link flex items-center text-primary hover:text-white">
                         <div className="w-6 h-6 mr-4">
                             <FaSearch className=" w-full h-full" />
                         </div>
@@ -28,7 +28,7 @@ function SlideBar() {
                     </Link>
                 </li>
                 <li className="sidebar-item py-2">
-                    <Link to="/artist" className="sidebar-link flex items-center text-primary hover:text-white">
+                    <Link to="/" className="sidebar-link flex items-center text-primary hover:text-white">
                         <div className="w-6 h-6 mr-4">
                             <FaBook className=" w-full h-full" />
                         </div>
@@ -44,11 +44,38 @@ function SlideBar() {
                     </Link>
                 </li>
                 <li className="sidebar-item py-2">
-                    <Link to="/me/info" className="sidebar-link flex items-center text-primary hover:text-white">
+                    <Link to="/playlist" className="sidebar-link flex items-center text-primary hover:text-white">
                         <div className="w-6 h-6 mr-4">
                             <FaBook className=" w-full h-full" />
                         </div>
-                        <span className="text-sm font-medium">My info</span>
+                        <span className="text-sm font-medium">Playlist</span>
+                    </Link>
+                </li>
+                <li className="sidebar-item py-2">
+                    <Link to="/artist" className="sidebar-link flex items-center text-primary hover:text-white">
+                        <div className="w-6 h-6 mr-4">
+                            <FaBook className=" w-full h-full" />
+                        </div>
+                        <span className="text-sm font-medium">Artist</span>
+                    </Link>
+                </li>
+                <li className="sidebar-item py-2">
+                    <Link to="/me/playlist" className="sidebar-link flex items-center text-primary hover:text-white">
+                        <div className="w-6 h-6 mr-4">
+                            <FaBook className=" w-full h-full" />
+                        </div>
+                        <span className="text-sm font-medium">My playlist</span>
+                    </Link>
+                </li>
+                <li className="sidebar-item py-2">
+                    <Link
+                        to="/me/playlist/123"
+                        className="sidebar-link flex items-center text-primary hover:text-white"
+                    >
+                        <div className="w-6 h-6 mr-4">
+                            <FaBook className=" w-full h-full" />
+                        </div>
+                        <span className="text-sm font-medium">My song</span>
                     </Link>
                 </li>
                 <li className="sidebar-item pt-8 pb-2">

@@ -1,16 +1,16 @@
 import { FaSpotify, FaPlay } from 'react-icons/fa'
-import avatar from '~/assets/images/avatar-default.jpg'
+import images from '~/assets/images'
 
 function Card({ type = 'playlist', data = {} }) {
     return (
-        <div className="col-span-1 p-4 bg-[#181818] border-none rounded-md overflow-hidden cursor-pointer card hover:bg-[#282828]">
+        <div className="col-span-1 p-4 bg-[#282828] border-none rounded-md overflow-hidden cursor-pointer card hover:bg-[#383838]">
             <div className="relative">
                 <div
                     className={`w-full h-full border-none ${
                         type === 'artist' ? 'rounded-full' : 'rounded-md'
                     } overflow-hidden`}
                 >
-                    <img className="w-full h-full object-cover" src={avatar} alt="" />
+                    <img className="w-full h-full object-cover" src={images.avatar} alt="" />
                 </div>
 
                 {type !== 'artist' && (

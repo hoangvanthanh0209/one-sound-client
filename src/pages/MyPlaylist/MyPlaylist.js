@@ -1,10 +1,10 @@
 import { useLayoutEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { ActionButton, ArtistHeader, Background, DashBoard, PopularSong } from '~/components'
+import { Background, PlaylistTable, ProfileHeader } from '~/components'
 import { randomColor } from '~/redux/slice/configSlice'
 
-function Artist() {
+function MyPlaylist() {
     const dispatch = useDispatch()
 
     useLayoutEffect(() => {
@@ -16,17 +16,13 @@ function Artist() {
             <Background />
             <div className="absolute top-h-header-content left-0 w-full h-h-bg-body-content bg-[#181818] -z-3"></div>
             <div className="px-8 pb-6">
-                <ArtistHeader />
-                <div>
-                    <ActionButton />
-                    <PopularSong />
-                    <DashBoard />
-                    <DashBoard />
-                    <DashBoard />
+                <ProfileHeader />
+                <div className="mt-8">
+                    <PlaylistTable />
                 </div>
             </div>
         </div>
     )
 }
 
-export default Artist
+export default MyPlaylist

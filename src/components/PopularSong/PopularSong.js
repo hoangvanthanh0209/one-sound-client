@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import SongItem from '../SongItem/SongItem'
+import { SongItem, PlaylistItem } from '~/components'
 
 function PopularSong() {
     const [showMore, setShowMore] = useState(false)
@@ -23,7 +23,7 @@ function PopularSong() {
         <div className="w-full h-full">
             <span className="text-2xl text-white">Popular</span>
             <div ref={popularSong} className="popular-song w-full h-70 mt-5 overflow-hidden">
-                <SongItem />
+                <PlaylistItem />
                 <SongItem />
                 <SongItem />
                 <SongItem />

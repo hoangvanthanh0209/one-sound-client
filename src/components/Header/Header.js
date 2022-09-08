@@ -1,14 +1,14 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { FaCaretDown } from 'react-icons/fa'
 
-import HeaderPlay from '../HeaderPlay/HeaderPlay'
-import avatar from '~/assets/images/avatar-default.jpg'
+import { HeaderPlay } from '~/components'
+import images from '~/assets/images'
 import { colorSelector } from '~/redux/selector'
-import { Link } from 'react-router-dom'
 import config from '~/config'
 
-const user = false
+const user = true
 
 function Header() {
     const [scrollY, setScrollY] = useState(0)
@@ -48,9 +48,9 @@ function Header() {
                     <button className="flex justify-center items-center border border-primary rounded-3xl h-8 px-4 py-2 text-primary hover:border-white hover:bg-black hover:text-white">
                         <span className="text-sm font-medium hover:font-semibold">Upgrade</span>
                     </button>
-                    <button className="flex items-center gap-2 border-none bg-0A rounded-2xl h-8 p-1 text-white hover:bg-28">
+                    <button className="flex items-center gap-2 border-none bg-[#0A0A0A] rounded-2xl h-8 p-1 text-white hover:bg-[#282828]">
                         <div className="w-7 h-7 rounded-full overflow-hidden">
-                            <img className="w-full h-full object-cover" src={avatar} alt="" />
+                            <img className="w-full h-full object-cover" src={images.avatar} alt="" />
                         </div>
                         <span className="text-sm tracking-wide">Hoangvanthanh</span>
                         <FaCaretDown />

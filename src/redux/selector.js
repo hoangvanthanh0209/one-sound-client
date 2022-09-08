@@ -1,2 +1,2 @@
 export const colorSelector = (state) => state.config.color
-export const isShowModalSelector = (state) => state.config.isShowModal
+export const modalSelector = (state) => state.config.modal

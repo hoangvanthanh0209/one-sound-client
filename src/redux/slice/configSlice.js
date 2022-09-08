@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { Fragment } from 'react'
 
 const ranInt = () => {
     return Math.floor(Math.random() * 256)
@@ -13,7 +14,11 @@ const ranColor = () => {
 
 const initialState = {
     color: 'rgb(0, 0, 0)',
-    isShowModal: false,
+    modal: {
+        isShow: false,
+        title: '',
+        form: Fragment,
+    },
 }
 
 const configSlice = createSlice({
@@ -21,28 +26,18 @@ const configSlice = createSlice({
     initialState,
     reducers: {
         randomColor: (state) => {
-            return {
-                ...state,
-                color: ranColor(),
-            }
+            state.color = ranColor()
         },
         resetColor: (state) => {
-            return {
-                ...state,
-                color: initialState.color,
-            }
+            state.color = initialState.color
         },
-        showModal: (state) => {
-            return {
-                ...state,
-                isShowModal: true,
-            }
+        showModal: (state, action) => {
+            state.modal.isShow = true
+            state.modal.title = action.payload.title
+            state.modal.form = action.payload.form
         },
         hiddenModal: (state) => {
-            return {
-                ...state,
-                isShowModal: false,
-            }
+            state.modal = initialState.modal
         },
     },
 })

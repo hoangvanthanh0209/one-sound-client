@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import images from '~/assets/images'
 
-function SongItem() {
+function PlaylistItem() {
     return (
         <div className="song-row flex justify-center items-center w-full h-14 text-sm text-primary cursor-pointer hover:bg-[#282828]">
             <div className="flex justify-center items-center relative w-1/12 h-full px-2">
@@ -27,29 +27,30 @@ function SongItem() {
                     <Link to="/" className="song-row-name text-base text-white hover:underline">
                         Chuyện Đôi Ta (feat. Muộii)
                     </Link>
-                    <div>
+                    {/* <div>
                         <Link to="/" className="song-row-link hover:underline">
                             Emcee L (Da LAB),{' '}
                         </Link>
                         <Link to="/" className="song-row-link hover:underline">
                             Muộii
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="flex justify-start items-center w-3/12 h-full px-2">
-                <Link to="/" className="song-row-link hover:underline">
+                {/* <Link to="/" className="song-row-link hover:underline">
                     Chuyện Đôi Ta (feat. Muộii)
-                </Link>
+                </Link> */}
+                <span>Chuyện của riêng đôi ta</span>
             </div>
             <div className="flex justify-start items-center w-2/12 h-full px-2">
-                <span>5 days ago</span>
+                <span>9 songs</span>
             </div>
             <div className="flex justify-center items-center gap-6 w-2/12 h-full px-2">
                 <div className="song-row-icon w-5 h-5 opacity-0 hover:text-white">
                     <FaRegHeart className="w-full h-full" />
                 </div>
-                <span>3:21</span>
+                <span>311 likes</span>
                 <div className="song-row-icon w-5 h-5 opacity-0 hover:text-white">
                     <FaEllipsisH className="w-full h-full" />
                 </div>
@@ -58,4 +59,4 @@ function SongItem() {
     )
 }
 
-export default SongItem
+export default PlaylistItem

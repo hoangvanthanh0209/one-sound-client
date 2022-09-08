@@ -1,12 +1,12 @@
 import { FaSpotify } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import avatar from '~/assets/images/avatar-default.jpg'
+import images from '~/assets/images'
 
 function PlaylistHeader() {
     return (
         <div className="flex justify-start items-center h-h-header-content">
             <div className="relative w-60 h-60 mr-5">
-                <img className="w-full h-full object-cover" src={avatar} alt="" />
+                <img className="w-full h-full object-cover" src={images.avatar} alt="" />
 
                 <div className="absolute top-2 left-2">
                     <div className="w-6 h-6">

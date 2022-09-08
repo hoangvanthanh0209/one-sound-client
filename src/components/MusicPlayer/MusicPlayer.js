@@ -13,8 +13,8 @@ import {
 import { Link } from 'react-router-dom'
 import { useRef, useState } from 'react'
 
-import avatar from '~/assets/images/avatar-default.jpg'
-import SongItem from '../SongItem/SongItem'
+import images from '~/assets/images'
+import { SongItem } from '~/components'
 
 function MusicPlayer() {
     const [show, setShow] = useState(false)
@@ -113,7 +113,7 @@ function MusicPlayer() {
             <div className="flex justify-between items-center w-full">
                 <div className="flex justify-start items-center w-1/4 overflow-hidden">
                     <div className="w-14 h-14">
-                        <img src={avatar} alt="" className="w-full h-full object-cover" />
+                        <img src={images.avatar} alt="" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex flex-col px-4 w-60">
                         <Link to="/" className="text-sm text-white truncate hover:underline">

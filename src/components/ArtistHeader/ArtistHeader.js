@@ -1,12 +1,12 @@
 import { FaCheck } from 'react-icons/fa'
-import avatar from '~/assets/images/avatar-default.jpg'
+import images from '~/assets/images'
 
 function ArtistHeader() {
     return (
         <div className="flex justify-start items-center gap-10 h-h-header-content">
             <div className="box">
                 <div className="content">
-                    <img className="avatar" src={avatar} alt="" />
+                    <img className="avatar" src={images.avatar} alt="" />
                 </div>
             </div>
             <div className="flex flex-col justify-center gap-4 h-h-header-content">
