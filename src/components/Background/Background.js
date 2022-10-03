@@ -1,11 +1,11 @@
 import { useLayoutEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { colorSelector } from '~/redux/selector'
+import { configSelector } from '~/redux/selector'
 
 function Background() {
     const bgPlaylist = useRef()
     const bgMidPlaylist = useRef()
-    const color = useSelector(colorSelector)
+    const { color } = useSelector(configSelector)
 
     useLayoutEffect(() => {
         bgPlaylist.current.style.background = color

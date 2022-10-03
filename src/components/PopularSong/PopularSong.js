@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { SongItem, PlaylistItem } from '~/components'
+import { SongItem } from '~/components'
 
-function PopularSong() {
+function PopularSong({ data }) {
     const [showMore, setShowMore] = useState(false)
     const popularSong = useRef()
 
@@ -23,16 +23,9 @@ function PopularSong() {
         <div className="w-full h-full">
             <span className="text-2xl text-white">Popular</span>
             <div ref={popularSong} className="popular-song w-full h-70 mt-5 overflow-hidden">
-                <PlaylistItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
+                {data.map((song, index) => {
+                    return <SongItem key={song.id} data={song} index={index + 1} isContextMenu={false} />
+                })}
             </div>
             <button className="text-primary text-xs uppercase tracking-wide" onClick={handleShow}>
                 {showMore ? 'See less' : 'See more'}

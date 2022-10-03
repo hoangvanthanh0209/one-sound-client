@@ -7,6 +7,7 @@ module.exports = {
                 primary: 'var(--primary-color)',
                 'bg-primary': 'var(--bg-primary-color)',
                 active: 'var(--active-color)',
+                'rgba-0-01': 'var(--rgba-0-01-color)',
                 'rgba-0-03': 'var(--rgba-0-03-color)',
                 'rgba-0-05': 'var(--rgba-0-05-color)',
                 'rgba-0-005': 'var(--rgba-0-005-color)',

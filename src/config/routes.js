@@ -2,12 +2,12 @@ const routes = {
     home: '/',
     login: '/login',
     register: '/register',
-    playlist: '/playlist',
-    artist: '/artist',
+    playlist: '/playlist/:slug',
+    artist: '/artist/:slug',
     me: '/me',
-    layout: '/layout',
     myplaylist: '/me/playlist',
-    mysong: '/me/playlist/:playlistId',
+    mysong: '/me/playlist/:slug',
+    search: '/search',
 }
 
 export default routes

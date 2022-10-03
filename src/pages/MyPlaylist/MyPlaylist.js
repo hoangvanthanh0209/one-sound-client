@@ -1,15 +1,30 @@
-import { useLayoutEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Background, PlaylistTable, ProfileHeader } from '~/components'
-import { randomColor } from '~/redux/slice/configSlice'
+import { getCategories, resetCategory } from '~/redux/category/categorySlice'
+import { randomColor } from '~/redux/config/configSlice'
+import { getPlaylists, resetMe } from '~/redux/me/meSlice'
+import { categorySelector, meSelector } from '~/redux/selector'
 
 function MyPlaylist() {
     const dispatch = useDispatch()
+    const { playlists, isSuccessMe } = useSelector(meSelector)
+    const { categories, isSuccessCategory } = useSelector(categorySelector)
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         dispatch(randomColor())
+        dispatch(getPlaylists())
+        dispatch(getCategories())
     }, [])
+
+    useEffect(() => {
+        isSuccessMe && dispatch(resetMe())
+    }, [playlists])
+
+    useEffect(() => {
+        isSuccessCategory && dispatch(resetCategory())
+    }, [categories])
 
     return (
         <div className="relative">
@@ -18,7 +33,7 @@ function MyPlaylist() {
             <div className="px-8 pb-6">
                 <ProfileHeader />
                 <div className="mt-8">
-                    <PlaylistTable />
+                    <PlaylistTable data={playlists} />
                 </div>
             </div>
         </div>

@@ -1,9 +1,41 @@
+// import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Header, Modal, MusicPlayer, PlaylistForm, SlideBar, SongForm } from '~/components'
-import { modalSelector } from '~/redux/selector'
+import { Header, Modal, ModalConfirm, MusicPlayer, SlideBar, Spinner } from '~/components'
+import {
+    authSelector,
+    categorySelector,
+    configSelector,
+    meSelector,
+    playlistSelector,
+    songSelector,
+    musicSelector,
+    artistSelector,
+} from '~/redux/selector'
 
 function DefaultLayout({ children }) {
-    const { isShow, title, form: Form } = useSelector(modalSelector)
+    const {
+        modal: { isShow },
+        modalConfirm: { isShow: isShowConfirm },
+    } = useSelector(configSelector)
+
+    const { isLoadingUser } = useSelector(authSelector)
+    const { isLoadingMe } = useSelector(meSelector)
+    const { isLoadingPlaylist } = useSelector(playlistSelector)
+    const { isLoadingSong } = useSelector(songSelector)
+    const { isLoadingCategory } = useSelector(categorySelector)
+    const { isLoadingMusic } = useSelector(musicSelector)
+    const { isLoadingArtist } = useSelector(artistSelector)
+
+    // useEffect(() => {
+    //     console.log('-----------------------')
+    //     console.log('isLoadingUser', isLoadingUser)
+    //     console.log('isLoadingMe', isLoadingMe)
+    //     console.log('isLoadingPlaylist', isLoadingPlaylist)
+    //     console.log('isLoadingSong', isLoadingSong)
+    //     console.log('isLoadingCategory', isLoadingCategory)
+    //     console.log('isLoadingMusic', isLoadingMusic)
+    //     console.log('-----------------------')
+    // }, [isLoadingUser, isLoadingMe, isLoadingPlaylist, isLoadingSong, isLoadingCategory, isLoadingMusic])
 
     return (
         <>
@@ -23,14 +55,15 @@ function DefaultLayout({ children }) {
                     <div className="h-px bg-line my-10 mx-8"></div>
                 </div>
             </div>
-            {isShow && (
-                <Modal title={title}>
-                    <Form />
-                </Modal>
-            )}
-            {/* <Modal title={'Thông tin playlist'}>
-                <SongForm />
-            </Modal> */}
+            {isShow && <Modal />}
+            {isShowConfirm && <ModalConfirm />}
+            {(isLoadingUser ||
+                isLoadingMe ||
+                isLoadingPlaylist ||
+                isLoadingSong ||
+                isLoadingCategory ||
+                isLoadingMusic ||
+                isLoadingArtist) && <Spinner />}
         </>
     )
 }

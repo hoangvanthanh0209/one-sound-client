@@ -1,9 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { FaRegClock } from 'react-icons/fa'
+import { BiLike } from 'react-icons/bi'
 
 import { SongItem } from '~/components'
 
-function ListSong() {
+function ListSong({ data = [] }) {
     const [scrollY, setScrollY] = useState(0)
     const background = useRef()
     const header = useRef()
@@ -57,34 +58,16 @@ function ListSong() {
                     <span>Date Added</span>
                 </div>
                 <div className="flex justify-center items-center w-2/12 h-full px-2">
-                    <div className="w-4 h-4">
-                        <FaRegClock className="w-full h-full" />
+                    <div className="w-5 h-5">
+                        {/* <FaRegClock className="w-full h-full" /> */}
+                        <BiLike className="w-full h-full" />
                     </div>
                 </div>
             </div>
-            <div className="w-full h-full">
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
-                <SongItem />
+            <div className="w-full h-full min-h-[250px]">
+                {data.map((song, index) => {
+                    return <SongItem key={song.id} data={song} index={index + 1} isRedirectArtist={true} />
+                })}
             </div>
         </div>
     )

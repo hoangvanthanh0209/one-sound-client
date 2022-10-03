@@ -123,7 +123,8 @@ html *::-webkit-scrollbar-track {
 }
 
 /* menu profile */
-.menu-profile-header::before {
+.menu-profile-header::before,
+.menu-header::before {
     content: '';
     position: absolute;
     top: -20px;
@@ -132,7 +133,8 @@ html *::-webkit-scrollbar-track {
     border-color: transparent transparent #383838 transparent;
 }
 
-.btn-menu-profile-header::before {
+.btn-menu-profile-header::before,
+.btn-menu-header::before {
     content: '';
     display: block;
     position: absolute;
@@ -141,6 +143,22 @@ html *::-webkit-scrollbar-track {
     width: 100%;
     height: 30px;
     background-color: transparent;
+}
+
+.input-disabled {
+    user-select: none;
+    opacity: 0.7;
+    pointer-events: none;
+    background-color: var(--rgba-0-03-color);
+}
+
+/* random btn music player active */
+.random-active {
+    color: var(--active-color);
+}
+/* repeat btn music player active */
+.repeat-active {
+    color: var(--active-color);
 }
 
 :root {
@@ -210,6 +228,7 @@ html *::-webkit-scrollbar-track {
     --bg-play-btn-color: #1ed760;
     --line-color: #292929;
 
+    --rgba-0-01-color: rgba(0, 0, 0, 0.1);
     --rgba-0-03-color: rgba(0, 0, 0, 0.3);
     --rgba-0-05-color: rgba(0, 0, 0, 0.5);
     --rgba-0-005-color: rgba(0, 0, 0, 0.05);
@@ -270,7 +289,7 @@ html *::-webkit-scrollbar-track {
     }
 
     .slider:hover .time-current-song,
-    .slider:hover .volumn-current {
+    .slider:hover .volume-current {
         @apply opacity-100 bg-play-btn;
     }
 }

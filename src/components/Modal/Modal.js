@@ -1,13 +1,36 @@
-import { useRef } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { hiddenModal } from '~/redux/slice/configSlice'
+import { hiddenModal } from '~/redux/config/configSlice'
+import { configSelector } from '~/redux/selector'
+import { InfoForm, AuthenForm, PlaylistForm, SongForm } from '~/components'
 
-function Modal({ title, children }) {
+function Modal() {
+    const dispatch = useDispatch()
     const modalRef = useRef()
     const modalContainerRef = useRef()
-    const dispatch = useDispatch()
+    const {
+        modal: { title, form },
+    } = useSelector(configSelector)
+    const [Form, setForm] = useState(Fragment)
+
+    useLayoutEffect(() => {
+        setForm(() => {
+            switch (form) {
+                case 'InfoForm':
+                    return InfoForm
+                case 'AuthenForm':
+                    return AuthenForm
+                case 'PlaylistForm':
+                    return PlaylistForm
+                case 'SongForm':
+                    return SongForm
+                default:
+                    return Fragment
+            }
+        })
+    }, [form])
 
     const handleHiddenModal = () => {
         dispatch(hiddenModal())
@@ -16,6 +39,20 @@ function Modal({ title, children }) {
     const handleModalContainerClick = (e) => {
         e.stopPropagation()
     }
+
+    const handleEscKeyUp = (e) => {
+        if (e.key === 'Escape') {
+            dispatch(hiddenModal())
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keyup', handleEscKeyUp)
+
+        return () => {
+            document.removeEventListener('keyup', handleEscKeyUp)
+        }
+    }, [])
 
     return (
         <div
@@ -39,7 +76,9 @@ function Modal({ title, children }) {
                 <div className="text-rgba-0-07 text-4xl font-bold tracking-wider">
                     <h2>{title}</h2>
                 </div>
-                <div>{children}</div>
+                <div>
+                    <Form />
+                </div>
             </div>
         </div>
     )

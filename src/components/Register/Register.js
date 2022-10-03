@@ -1,18 +1,25 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FaLock, FaLockOpen, FaLongArrowAltRight, FaRegTimesCircle, FaRegUser } from 'react-icons/fa'
-import images from '~/assets/images'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
+import config from '~/config'
+import { register, resetAuth } from '~/redux/auth/authSlice'
+import { authSelector } from '~/redux/selector'
 
 function Register({ onClick }) {
-    const inputAvatar = useRef()
     const passwordLock = useRef()
     const passwordUnlock = useRef()
     const passwordRef = useRef()
     const password2Lock = useRef()
     const password2Unlock = useRef()
     const password2Ref = useRef()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const { user, isErrorAuth, isSuccessAuth, errorMessageAuth } = useSelector(authSelector)
 
     const [formData, setFormData] = useState({
-        avatar: '',
         name: '',
         artistName: '',
         username: '',
@@ -20,11 +27,7 @@ function Register({ onClick }) {
         password2: '',
     })
 
-    const { avatar, name, artistName, username, password, password2 } = formData
-
-    const handleAvtarClick = () => {
-        inputAvatar.current.click()
-    }
+    const { name, artistName, username, password, password2 } = formData
 
     const handleChange = (e) => {
         setFormData((prevData) => {
@@ -55,27 +58,39 @@ function Register({ onClick }) {
         }
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        if (password !== password2) {
+            toast.error('Xác nhận mật khẩu không đúng')
+        } else {
+            const userData = {
+                name,
+                artistName,
+                username,
+                password,
+            }
+            dispatch(register(userData))
+        }
+    }
+
+    useEffect(() => {
+        if (isErrorAuth) {
+            toast.error(errorMessageAuth)
+        }
+
+        if (isSuccessAuth || user) {
+            navigate(config.routes.home)
+        }
+
+        dispatch(resetAuth())
+    }, [user, isErrorAuth, isSuccessAuth, errorMessageAuth, navigate, dispatch])
+
     return (
         <div className="flex flex-col justify-center items-center w-[500px] text-white">
             <div className="flex flex-col p-4">
                 <h3 className="text-3xl font-medium text-center">Member Register</h3>
-                <div className="flex justify-center items-center mt-10">
-                    <div
-                        className="w-[100px] h-[100px] rounded-full overflow-hidden object-cover border border-rgba-0-05 cursor-pointer"
-                        onClick={handleAvtarClick}
-                    >
-                        <img src={images.avatar} />
-                    </div>
-                    <input
-                        ref={inputAvatar}
-                        type="file"
-                        name="avatar"
-                        value={avatar}
-                        className="hidden"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="flex justify-start items-center gap-2 relative mt-5 border rounded-lg">
+                <div className="flex justify-start items-center gap-2 relative mt-10 border rounded-lg">
                     <div className="flex justify-center items-center w-10 h-10">
                         <div className="w-5 h-5">
                             <FaRegUser className="w-full h-full" />
@@ -225,7 +240,12 @@ function Register({ onClick }) {
                         </div>
                     )}
                 </div>
-                <button className="mt-10 w-full h-[52px] bg-rgba-0-05 rounded-lg hover:opacity-80">Register</button>
+                <button
+                    className="mt-10 w-full h-[52px] bg-rgba-0-05 rounded-lg hover:opacity-80"
+                    onClick={handleSubmit}
+                >
+                    Register
+                </button>
             </div>
             <button className="text-white flex justify-center items-center hover:underline" onClick={onClick}>
                 <span>You have account, log in now</span>

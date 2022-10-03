@@ -1,16 +1,25 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FaLock, FaLockOpen, FaLongArrowAltLeft, FaRegTimesCircle, FaRegUser } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { login, resetAuth } from '~/redux/auth/authSlice'
+import { authSelector } from '~/redux/selector'
+import { toast } from 'react-toastify'
+import config from '~/config'
 
 function Login({ onClick }) {
     const passwordLock = useRef()
     const passwordUnlock = useRef()
     const passwordRef = useRef()
-    const [fromData, setFormData] = useState({
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const { user, isErrorAuth, isSuccessAuth, errorMessageAuth } = useSelector(authSelector)
+    const [formData, setFormData] = useState({
         username: '',
         password: '',
     })
-    const { username, password } = fromData
+    const { username, password } = formData
 
     const handleChange = (e) => {
         setFormData((prevData) => {
@@ -39,6 +48,22 @@ function Login({ onClick }) {
         } else {
             inputRef.current.type = 'password'
         }
+    }
+
+    useEffect(() => {
+        if (isErrorAuth) {
+            toast.error(errorMessageAuth)
+        }
+
+        if (isSuccessAuth || user) {
+            navigate(config.routes.home)
+        }
+
+        dispatch(resetAuth())
+    }, [user, isErrorAuth, isSuccessAuth, errorMessageAuth, navigate, dispatch])
+
+    const handleLogin = () => {
+        dispatch(login(formData))
     }
 
     return (
@@ -107,7 +132,12 @@ function Login({ onClick }) {
                         </div>
                     )}
                 </div>
-                <button className="mt-10 w-full h-[52px] bg-rgba-0-05 rounded-lg hover:opacity-80">Login</button>
+                <button
+                    className="mt-10 w-full h-[52px] bg-rgba-0-05 rounded-lg hover:opacity-80"
+                    onClick={handleLogin}
+                >
+                    Login
+                </button>
                 <Link to={'/'} className="mt-10 text-primary text-center text-base hover:underline">
                     Forgot Username, Password
                 </Link>
