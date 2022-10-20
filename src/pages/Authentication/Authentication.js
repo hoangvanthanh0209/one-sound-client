@@ -1,4 +1,5 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+
 import images from '~/assets/images'
 import { Login, Register } from '~/components'
 
@@ -12,7 +13,7 @@ function Authentication() {
         background.current.classList.remove('translate-x-[500px]')
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const pathName = window.location.pathname.replace('/', '')
 
         if (pathName === 'login') {

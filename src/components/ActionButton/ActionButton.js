@@ -1,34 +1,55 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FaPlay, FaRegHeart } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
-import { likeArtist } from '~/redux/artist/artistSlice'
+import myError from '~/utils/error'
 import { playPlaylistById, resetMusic } from '~/redux/music/musicSlice'
-import { likePlaylist, resetPlaylist } from '~/redux/playlist/playlistSlice'
-import { artistSelector, musicSelector, playlistSelector } from '~/redux/selector'
+import { musicSelector } from '~/redux/selector'
+import artistService from '~/redux/artist/artistService'
+import playlistService from '~/redux/playlist/playlistService'
 
-function ActionButton({ type = 'playlist' }) {
+function ActionButton({ type = 'playlist', id }) {
     const dispatch = useDispatch()
-    const { currentPlaylist, isSuccessPlaylist } = useSelector(playlistSelector)
     const { playlist, isSuccessMusic } = useSelector(musicSelector)
-    const { currentArtist } = useSelector(artistSelector)
+    const [error, setError] = useState('')
+
+    const likePlaylist = async (id) => {
+        try {
+            const respon = await playlistService.likePlaylist(id)
+        } catch (error) {
+            console.log(error)
+            const message = myError.getError(error)
+            setError(message)
+        }
+    }
+
+    const likeArtist = async (id) => {
+        try {
+            const respon = await artistService.likeArtist(id)
+        } catch (error) {
+            console.log(error)
+            const message = myError.getError(error)
+            setError(message)
+        }
+    }
 
     const handlePlayPlaylistBtnClick = () => {
-        type = 'playlist' && dispatch(playPlaylistById(currentPlaylist.id))
+        type == 'playlist' && id && dispatch(playPlaylistById(id))
     }
 
     const handleLikePlaylistBtnClick = () => {
-        type = 'playlist' && dispatch(likePlaylist(currentPlaylist.id))
-        type = 'artist' && dispatch(likeArtist(currentArtist.id))
+        type == 'playlist' && id && likePlaylist(id)
+        type == 'artist' && id && likeArtist(id)
     }
-
-    useEffect(() => {
-        isSuccessPlaylist && dispatch(resetPlaylist())
-    }, [currentPlaylist])
 
     useEffect(() => {
         isSuccessMusic && dispatch(resetMusic())
     }, [playlist])
+
+    useEffect(() => {
+        error && toast.error(error)
+    }, [error])
 
     return (
         <div className="flex justify-start items-center gap-8 h-h-action-playlist">

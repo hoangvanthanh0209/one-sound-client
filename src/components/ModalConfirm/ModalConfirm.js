@@ -1,20 +1,27 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
+import myError from '~/utils/error'
 import { hiddenModalConfirm } from '~/redux/config/configSlice'
-import { configSelector, meSelector } from '~/redux/selector'
-import { deletePlaylist, deleteSong, resetMe } from '~/redux/me/meSlice'
+import { reloadPlaylist, reloadSong } from '~/redux/current/currentSlice'
+import { authSelector, configSelector } from '~/redux/selector'
+import meService from '~/redux/me/meService'
 
 function ModalConfirm() {
     const dispatch = useDispatch()
-    const modalRef = useRef()
-    const modalContainerRef = useRef()
+
     const {
         modalConfirm: { id, model },
     } = useSelector(configSelector)
-    const { isSuccessMe, isErrorMe, errorMessageMe } = useSelector(meSelector)
+    const { user } = useSelector(authSelector)
+    const { token } = user
+
+    const modalRef = useRef()
+    const modalContainerRef = useRef()
+
+    const [error, setError] = useState('')
 
     const handleHiddenModal = () => {
         dispatch(hiddenModalConfirm())
@@ -24,13 +31,44 @@ function ModalConfirm() {
         e.stopPropagation()
     }
 
+    const handleDeletePlaylist = async (id) => {
+        try {
+            const requestStatus = await meService.deletePlaylist(id, token)
+
+            if (requestStatus === 200) {
+                toast.success('Xóa thành công')
+                dispatch(hiddenModalConfirm())
+                dispatch(reloadPlaylist())
+            }
+        } catch (error) {
+            console.log(error)
+            const message = myError.getError(error)
+            setError(message)
+        }
+    }
+    const handleDeleteSong = async (id) => {
+        try {
+            const requestStatus = await meService.deleteSong(id, token)
+
+            if (requestStatus === 200) {
+                toast.success('Xóa thành công')
+                dispatch(hiddenModalConfirm())
+                dispatch(reloadSong())
+            }
+        } catch (error) {
+            console.log(error)
+            const message = myError.getError(error)
+            setError(message)
+        }
+    }
+
     const handleConfirmActionClick = () => {
         switch (model) {
             case 'playlist':
-                dispatch(deletePlaylist(id))
+                handleDeletePlaylist(id)
                 break
             case 'song':
-                dispatch(deleteSong(id))
+                handleDeleteSong(id)
                 break
             default:
                 break
@@ -55,16 +93,8 @@ function ModalConfirm() {
     }, [])
 
     useEffect(() => {
-        if (isErrorMe) {
-            toast.error(errorMessageMe)
-        }
-
-        if (isSuccessMe) {
-            toast.success('Thao tác thành công')
-            dispatch(hiddenModalConfirm())
-            dispatch(resetMe())
-        }
-    }, [isErrorMe, errorMessageMe, isSuccessMe, dispatch])
+        error && toast.error(error)
+    }, [error])
 
     return (
         <div

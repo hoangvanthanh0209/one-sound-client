@@ -4,12 +4,8 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 
 import authSlice from './auth/authSlice'
 import configSlice from './config/configSlice'
-import meSlice from './me/meSlice'
 import musicSlice from './music/musicSlice'
 import categorySlice from './category/categorySlice'
-import playlistSlice from './playlist/playlistSlice'
-import songSlice from './song/songSlice'
-import artistSlice from './artist/artistSlice'
 import currentSlice from './current/currentSlice'
 
 const persistConfig = {
@@ -21,12 +17,8 @@ const persistConfig = {
 const reducer = combineReducers({
     config: configSlice,
     auth: authSlice,
-    me: meSlice,
     music: musicSlice,
     category: categorySlice,
-    playlist: playlistSlice,
-    song: songSlice,
-    artist: artistSlice,
     current: currentSlice,
 })
 

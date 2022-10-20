@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/me/'
+const API_URL = 'https://one-sound-hvt.herokuapp.com/api/me/'
 
 const config = (token) => {
     return {
@@ -11,8 +11,40 @@ const config = (token) => {
 }
 
 // get playlists
-const getPlaylists = async (token) => {
-    const res = await axios.get(API_URL + 'playlist', config(token))
+const getPlaylists = async (filters, token) => {
+    const { page, limit, name } = filters
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        params: {
+            page,
+            limit,
+            name,
+        },
+    }
+    const res = await axios.get(API_URL + 'playlist', config)
+
+    return res.data
+}
+
+// get songs by playlist id
+const getSongsByPlaylistId = async (filters, token) => {
+    const { playlistId, page, limit, name } = filters
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        params: {
+            playlistId,
+            page,
+            limit,
+            name,
+        },
+    }
+    const res = await axios.get(API_URL + 'song', config)
 
     return res.data
 }
@@ -21,7 +53,7 @@ const getPlaylists = async (token) => {
 const createPlaylist = async (playlistData, token) => {
     const res = await axios.post(API_URL + 'playlist', playlistData, config(token))
 
-    return res.data
+    return res.status
 }
 
 // update playlist
@@ -30,14 +62,14 @@ const updatePlaylist = async (playlistData, token) => {
 
     const res = await axios.put(API_URL + 'playlist/' + id, playlistData, config(token))
 
-    return res.data
+    return res.status
 }
 
 // delete playlist
 const deletePlaylist = async (playlistId, token) => {
     const res = await axios.delete(API_URL + 'playlist/' + playlistId, config(token))
 
-    return res.data
+    return res.status
 }
 
 // get song of playlist
@@ -66,30 +98,31 @@ const createSong = async (data, token) => {
         },
     }
 
-    const res = await axios.post(API_URL + 'playlist/song', songData, config)
+    const res = await axios.post(API_URL + 'song', songData, config)
 
-    return res.data
+    return res.status
 }
 
 // add song
 const updateSong = async (songData, token) => {
     const id = songData.get('id')
 
-    const res = await axios.put(API_URL + 'playlist/song/' + id, songData, config(token))
+    const res = await axios.put(API_URL + 'song/' + id, songData, config(token))
 
-    return res.data
+    return res.status
 }
 
 // delete song
 const deleteSong = async (songId, token) => {
-    const res = await axios.delete(API_URL + 'playlist/song/' + songId, config(token))
+    const res = await axios.delete(API_URL + 'song/' + songId, config(token))
 
-    return res.data
+    return res.status
 }
 
 const meService = {
     createPlaylist,
     getPlaylists,
+    getSongsByPlaylistId,
     updatePlaylist,
     deletePlaylist,
     getSongOfPlaylist,

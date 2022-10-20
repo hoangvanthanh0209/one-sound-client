@@ -69,16 +69,6 @@ function AuthenForm() {
 
     return (
         <div className="flex flex-col justify-start items-center gap-4 w-[368px]">
-            {/* <div className="flex flex-col justify-start gap-2 w-full h-[98px]">
-                <label className="text-xs text-[#666666] font-semibold">Tài khoản</label>
-                <input
-                    value={username}
-                    name="username"
-                    className="bg-rgba-0-005 border border-[#CCCCCC] outline-none rounded w-full px-4 py-3 focus:border-rgba-0-03 input-disabled"
-                    readOnly
-                    spellCheck={false}
-                />
-            </div> */}
             <div className="flex flex-col justify-start gap-2 w-full h-[98px]">
                 <label className="text-xs text-[#666666] font-semibold">Mật khẩu cũ</label>
                 <input

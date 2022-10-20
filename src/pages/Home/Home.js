@@ -1,44 +1,77 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 
+import MyError from '~/utils/error'
 import { DashBoard } from '~/components'
-import { artistSelector, playlistSelector } from '~/redux/selector'
 import { resetColor } from '~/redux/config/configSlice'
-import { getPlaylists, resetPlaylist } from '~/redux/playlist/playlistSlice'
-import { getTopArtist, resetArtist } from '~/redux/artist/artistSlice'
+import playlistService from '~/redux/playlist/playlistService'
+import artistService from '~/redux/artist/artistService'
 
 function Home() {
     const dispatch = useDispatch()
-    const { playlists, isSuccessPlaylist } = useSelector(playlistSelector)
-    const { artists, isSuccessArtist } = useSelector(artistSelector)
+
+    const [playlists, setPlaylists] = useState([])
+    const [artists, setArtists] = useState([])
+    const [error, setError] = useState('')
+    const [filters, setFiters] = useState({
+        page: null,
+        limit: null,
+        name: null,
+        typeSort: null,
+    })
+
+    const getPlaylists = async () => {
+        try {
+            const respon = await playlistService.getPlaylists()
+            setPlaylists(respon)
+        } catch (error) {
+            console.log(error)
+            const message = MyError.getError(error)
+            setError(message)
+        }
+    }
+
+    const getArtists = async (filters) => {
+        try {
+            const respon = await artistService.getArtists(filters)
+            const { data } = respon
+            setArtists(data)
+        } catch (error) {
+            console.log(error)
+            const message = MyError.getError(error)
+            setError(message)
+        }
+    }
 
     useEffect(() => {
         dispatch(resetColor())
-        dispatch(getPlaylists())
-        dispatch(getTopArtist())
+        getPlaylists()
     }, [])
 
     useEffect(() => {
-        isSuccessPlaylist && dispatch(resetPlaylist())
-    }, [playlists])
+        getArtists(filters)
+    }, [filters])
 
     useEffect(() => {
-        isSuccessArtist && dispatch(resetArtist())
-    }, [artists])
+        error && toast.error(error)
+    }, [error])
 
     return (
         <div className="flex flex-col gap-6 w-full">
-            {playlists.map((playlist) => {
+            {playlists?.map((playlist) => {
                 return (
                     <DashBoard
                         key={playlist.categoryId}
                         title={playlist.categoryName}
                         data={playlist.data}
-                        length={playlist.count}
+                        categoryId={playlist.categoryId}
+                        categorySlug={playlist.categorySlug}
+                        isLimit={true}
                     />
                 )
             })}
-            <DashBoard title="Nghệ sĩ nổi bật" data={artists} length={artists.length} type="artist" />
+            <DashBoard title="Nghệ sĩ nổi bật" data={artists} type="artist" isLimit={true} />
         </div>
     )
 }

@@ -1,5 +1,5 @@
-import { FaEllipsisH, FaPlay, FaRegHeart } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { FaPlay, FaRegHeart } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import ContextMenu from 'devextreme-react/context-menu'
 import 'devextreme/dist/css/dx.dark.css'
@@ -8,11 +8,11 @@ import images from '~/assets/images'
 import { setDataForm, showModal, showModalConfirm } from '~/redux/config/configSlice'
 import { useState } from 'react'
 import { playPlaylistById } from '~/redux/music/musicSlice'
-import { getSongOfPlaylist } from '~/redux/me/meSlice'
 import { setPlaylistIdMe } from '~/redux/current/currentSlice'
 
 function PlaylistItem({ data = {}, index, isShowLike = false }) {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [visibleContextMenu, setVisibleContextMenu] = useState(false)
     const items = [{ text: 'Nghe' }, { text: 'Sửa' }, { text: 'Xóa' }]
 
@@ -41,6 +41,7 @@ function PlaylistItem({ data = {}, index, isShowLike = false }) {
 
     const handlePlaylistLinkBtnClick = (id) => {
         dispatch(setPlaylistIdMe(id))
+        navigate(`/me/playlist/${data?.slug}`)
     }
 
     const playPlaylist = (id) => {
@@ -82,38 +83,24 @@ function PlaylistItem({ data = {}, index, isShowLike = false }) {
                     <div className="w-10 h-10 mr-4">
                         <img src={data.thumbnail || images.playlist} alt="" className="w-full h-full object-cover" />
                     </div>
-                    <div className="flex flex-col flex-1 truncate">
-                        <Link
-                            to={`${data.slug}`}
-                            className="song-row-name text-base text-white truncate hover:underline"
+                    <div className="flex flex-col truncate">
+                        <button
                             onClick={() => {
                                 handlePlaylistLinkBtnClick(data.id)
                             }}
                         >
-                            {data.name}
-                        </Link>
+                            <span className="song-row-name text-base text-white truncate hover:underline">
+                                {data.name}
+                            </span>
+                        </button>
                     </div>
                 </div>
                 <div className="flex justify-start items-center w-3/12 h-full px-2 ">
-                    <span className="truncate">
-                        {/* {typeof data.description === 'undefined' ? 'Không có mô tả' : data.description} */}
-                        {data.description ? data.description : 'Không có mô tả'}
-                    </span>
+                    <span className="truncate">{data?.description ? data?.description : 'Không có mô tả'}</span>
                 </div>
                 <div className="flex justify-start items-center w-2/12 h-full px-2">
                     <span>{data.countSong} songs</span>
                 </div>
-                {/* <div className="flex justify-center items-center gap-6 w-2/12 h-full px-2">
-                    <div className="song-row-icon w-5 h-5 opacity-0 hover:text-white">
-                        <FaRegHeart className="w-full h-full" />
-                    </div>
-                    <span>
-                        {data.likeCount} {data.likeCount > 1 ? 'likes' : 'like'}
-                    </span>
-                    <div className="song-row-icon w-5 h-5 opacity-0 hover:text-white">
-                        <FaEllipsisH className="w-full h-full" />
-                    </div>
-                </div> */}
                 <div className="flex justify-center items-center gap-6 w-2/12 h-full px-2">
                     <span>
                         {data.likeCount} {data.likeCount > 1 ? 'likes' : 'like'}

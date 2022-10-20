@@ -89,7 +89,7 @@ function Register({ onClick }) {
     return (
         <div className="flex flex-col justify-center items-center w-[500px] text-white">
             <div className="flex flex-col p-4">
-                <h3 className="text-3xl font-medium text-center">Member Register</h3>
+                <h3 className="text-3xl font-medium text-center">Đăng ký</h3>
                 <div className="flex justify-start items-center gap-2 relative mt-10 border rounded-lg">
                     <div className="flex justify-center items-center w-10 h-10">
                         <div className="w-5 h-5">
@@ -100,7 +100,7 @@ function Register({ onClick }) {
                         name="name"
                         value={name}
                         className="bg-transparent outline-none text-lg w-[400px] py-3 pr-10"
-                        placeholder="Enter Your Name"
+                        placeholder="Tên của bạn"
                         onChange={handleChange}
                     />
                     {name && (
@@ -126,7 +126,7 @@ function Register({ onClick }) {
                         name="artistName"
                         value={artistName}
                         className="bg-transparent outline-none text-lg w-[400px] py-3 pr-10"
-                        placeholder="Enter Your Artist Name"
+                        placeholder="Nghệ danh của bạn"
                         onChange={handleChange}
                     />
                     {artistName && (
@@ -153,7 +153,7 @@ function Register({ onClick }) {
                         value={username}
                         onChange={handleChange}
                         className="bg-transparent outline-none text-lg w-[400px] py-3 pr-10"
-                        placeholder="Enter Username"
+                        placeholder="Tài khoản của bạn"
                     />
                     {username && (
                         <div
@@ -188,7 +188,7 @@ function Register({ onClick }) {
                         name="password"
                         value={password}
                         className="bg-transparent outline-none text-lg w-[400px] py-3 pr-10"
-                        placeholder="Enter Password"
+                        placeholder="Mật khẩu của bạn"
                         onChange={handleChange}
                     />
                     {password && (
@@ -224,7 +224,7 @@ function Register({ onClick }) {
                         name="password2"
                         value={password2}
                         className="bg-transparent outline-none text-lg w-[400px] py-3 pr-10"
-                        placeholder="Confirm Password"
+                        placeholder="Nhập lại mật khẩu"
                         onChange={handleChange}
                     />
                     {password2 && (
@@ -244,11 +244,11 @@ function Register({ onClick }) {
                     className="mt-10 w-full h-[52px] bg-rgba-0-05 rounded-lg hover:opacity-80"
                     onClick={handleSubmit}
                 >
-                    Register
+                    Đăng ký
                 </button>
             </div>
             <button className="text-white flex justify-center items-center hover:underline" onClick={onClick}>
-                <span>You have account, log in now</span>
+                <span>Bạn đã có tài khoản? Đăng nhâp ngay!</span>
                 <div className="flex justify-center items-center w-6 h-6 translate-y-[2px]">
                     <div className="w-4 h-4">
                         <FaLongArrowAltRight className="w-full h-full" />

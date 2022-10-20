@@ -1,19 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/users/'
-
-// get top artist
-const getTopArtist = async (topNumber) => {
-    const topArtist = 10
-    const config = {
-        params: {
-            top: topNumber || topArtist,
-        },
-    }
-    const res = await axios.get(API_URL + 'top', config)
-
-    return res.data
-}
+const API_URL = 'https://one-sound-hvt.herokuapp.com/api/users/'
 
 // get artist by id
 const getArtistById = async (artistId) => {
@@ -22,28 +9,19 @@ const getArtistById = async (artistId) => {
     return res.data
 }
 
-// get top artists farvourite
-const getTopArtistsFavourite = async (topNumber) => {
+// get artists
+const getArtists = async (options) => {
+    const { page, limit, name, typeSort } = options
     const config = {
         params: {
-            top: topNumber,
+            page,
+            limit,
+            name,
+            typeSort,
         },
     }
 
-    const res = await axios.get(API_URL + 'top', config)
-
-    return res.data
-}
-
-// get artists by name
-const getArtistsByName = async (name) => {
-    const config = {
-        params: {
-            name: name,
-        },
-    }
-
-    const res = await axios.get(API_URL + 'search', config)
+    const res = await axios.get(API_URL + 'get', config)
 
     return res.data
 }
@@ -52,14 +30,12 @@ const getArtistsByName = async (name) => {
 const likeArtist = async (userId) => {
     const res = await axios.put(API_URL + 'like/' + userId)
 
-    return res.data
+    return res.status
 }
 
 const artistService = {
-    getTopArtist,
     getArtistById,
-    getTopArtistsFavourite,
-    getArtistsByName,
+    getArtists,
     likeArtist,
 }
 

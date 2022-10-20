@@ -46,7 +46,6 @@ function MusicPlayer() {
     const [currentTimeSong, setCurrentTimeSong] = useState('00:00')
     const [timeSong, setTimeSong] = useState(0)
     const [volume, setVolume] = useState(100)
-    // const [playing, setPlaying] = useState(false)
     const [isRepeat, setIsRepeat] = useState(isRepeatSlice)
     const [isRandom, setIsRandom] = useState(isRandomSlice)
 
@@ -111,7 +110,6 @@ function MusicPlayer() {
     }
 
     const handlePlayBtnClick = () => {
-        // setPlaying(true)
         dispatch(setIsPlaying(true))
         audioRef.current.play()
     }
@@ -214,7 +212,6 @@ function MusicPlayer() {
                         } else {
                             setDuration('00:00')
                         }
-                        // setPlaying(true)
                         // load progres percent
                         audio.addEventListener('timeupdate', updateProcess)
                         //end song

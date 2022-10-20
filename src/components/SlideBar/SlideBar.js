@@ -1,4 +1,4 @@
-import { FaSpotify, FaHome, FaSearch, FaBook, FaPlus, FaHeart } from 'react-icons/fa'
+import { FaMusic, FaHome, FaSearch, FaBook, FaPlus, FaHeart } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -17,8 +17,8 @@ function SlideBar() {
     return (
         <div className="flex flex-col gap-6 p-5 bg-black h-full w-full">
             <Link to="/" className="flex justify-start items-center py-2">
-                <div className="w-8 h-8 mr-2">
-                    <FaSpotify className="fill-white w-full h-full" />
+                <div className="w-7 h-7 mr-2">
+                    <FaMusic className="fill-white w-full h-full" />
                 </div>
                 <span className="text-2xl text-white font-semibold">One sound</span>
             </Link>
@@ -28,7 +28,7 @@ function SlideBar() {
                         <div className="w-6 h-6 mr-4">
                             <FaHome className=" w-full h-full" />
                         </div>
-                        <span className="text-sm font-medium">Home</span>
+                        <span className="text-sm font-medium">Trang chủ</span>
                     </Link>
                 </li>
                 <li className="sidebar-item py-2">
@@ -39,27 +39,11 @@ function SlideBar() {
                         <div className="w-6 h-6 mr-4">
                             <FaSearch className=" w-full h-full" />
                         </div>
-                        <span className="text-sm font-medium">Search</span>
-                    </Link>
-                </li>
-                <li className="sidebar-item py-2">
-                    <Link to="/" className="sidebar-link flex items-center text-primary hover:text-white">
-                        <div className="w-6 h-6 mr-4">
-                            <FaBook className=" w-full h-full" />
-                        </div>
-                        <span className="text-sm font-medium">Your Library</span>
+                        <span className="text-sm font-medium">Tìm kiếm</span>
                     </Link>
                 </li>
                 {user && (
                     <>
-                        {/* <li className="sidebar-item py-2">
-                            <Link to="/me" className="sidebar-link flex items-center text-primary hover:text-white">
-                                <div className="w-6 h-6 mr-4">
-                                    <FaBook className=" w-full h-full" />
-                                </div>
-                                <span className="text-sm font-medium">Me</span>
-                            </Link>
-                        </li> */}
                         <li className="sidebar-item py-2">
                             <Link
                                 to={config.routes.myplaylist}
@@ -68,7 +52,7 @@ function SlideBar() {
                                 <div className="w-6 h-6 mr-4">
                                     <FaBook className=" w-full h-full" />
                                 </div>
-                                <span className="text-sm font-medium">My playlist</span>
+                                <span className="text-sm font-medium">Danh sách playlist của bạn</span>
                             </Link>
                         </li>
                         <li className="sidebar-item pt-8 pb-2">
@@ -81,18 +65,8 @@ function SlideBar() {
                                         <FaPlus className="w-full h-full" />
                                     </div>
                                 </div>
-                                <span className="text-sm font-medium">Create Playlist</span>
+                                <span className="text-sm font-medium">Tạo playlist</span>
                             </button>
-                        </li>
-                        <li className="sidebar-item py-2">
-                            <Link to="/" className="sidebar-link flex items-center text-primary hover:text-white">
-                                <div className="sidebar-link-icon flex justify-center items-center bg-gradient-to-br from-violet-700 to-gray-400 opacity-70 rounded-sm w-6 h-6 mr-4">
-                                    <div className="w-3 h-3 text-[#b2b2b2]">
-                                        <FaHeart className="w-full h-full" />
-                                    </div>
-                                </div>
-                                <span className="text-sm font-medium">Liked Songs</span>
-                            </Link>
                         </li>
                     </>
                 )}

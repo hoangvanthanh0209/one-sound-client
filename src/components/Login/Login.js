@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { FaLock, FaLockOpen, FaLongArrowAltLeft, FaRegTimesCircle, FaRegUser } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
+import config from '~/config'
 import { login, resetAuth } from '~/redux/auth/authSlice'
 import { authSelector } from '~/redux/selector'
-import { toast } from 'react-toastify'
-import config from '~/config'
 
 function Login({ onClick }) {
     const passwordLock = useRef()
@@ -69,7 +69,7 @@ function Login({ onClick }) {
     return (
         <div className="flex flex-col justify-center items-center w-[500px] text-white">
             <div className="flex flex-col p-4">
-                <h3 className="text-3xl font-medium text-center">Member login</h3>
+                <h3 className="text-3xl font-medium text-center">Đăng nhập</h3>
                 <div className="flex justify-start items-center gap-2 relative mt-10 border rounded-lg">
                     <div className="flex justify-center items-center w-10 h-10">
                         <div className="w-5 h-5">
@@ -80,7 +80,7 @@ function Login({ onClick }) {
                         name="username"
                         value={username}
                         className="bg-transparent outline-none text-lg w-[400px] py-3 pr-10"
-                        placeholder="Enter Username"
+                        placeholder="Tài khoản"
                         onChange={handleChange}
                     />
                     {username && (
@@ -116,7 +116,7 @@ function Login({ onClick }) {
                         name="password"
                         value={password}
                         className="bg-transparent outline-none text-lg w-[400px] py-3 pr-10"
-                        placeholder="Enter Password"
+                        placeholder="Mật khẩu"
                         onChange={handleChange}
                     />
                     {password && (
@@ -136,14 +136,14 @@ function Login({ onClick }) {
                     className="mt-10 w-full h-[52px] bg-rgba-0-05 rounded-lg hover:opacity-80"
                     onClick={handleLogin}
                 >
-                    Login
+                    Đăng nhập
                 </button>
                 <Link to={'/'} className="mt-10 text-primary text-center text-base hover:underline">
-                    Forgot Username, Password
+                    Quên mật khẩu?
                 </Link>
             </div>
             <button className="text-white flex justify-center items-center hover:underline" onClick={onClick}>
-                <span>Create your account</span>
+                <span>Tạo tài khoản</span>
                 <div className="flex justify-center items-center w-6 h-6 translate-y-[2px]">
                     <div className="w-4 h-4">
                         <FaLongArrowAltLeft className="w-full h-full" />

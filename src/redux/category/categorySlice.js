@@ -3,7 +3,6 @@ import categoryService from './categoryService'
 
 const initialState = {
     categories: [],
-    currentCategory: {},
     isLoadingCategory: false,
     isSuccessCategory: false,
     isErrorCategory: false,
@@ -12,6 +11,7 @@ const initialState = {
     listErrorMessageCategory: [],
 }
 
+// get categories
 export const getCategories = createAsyncThunk('category/fetch', async (_, thunkAPI) => {
     try {
         return await categoryService.getCategories()

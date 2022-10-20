@@ -2,12 +2,11 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { HeaderPlay } from '~/components'
 import images from '~/assets/images'
-import { authSelector, configSelector } from '~/redux/selector'
 import config from '~/config'
 import { showModal } from '~/redux/config/configSlice'
 import { logout } from '~/redux/auth/authSlice'
+import { authSelector, configSelector } from '~/redux/selector'
 
 function Header() {
     const [scrollY, setScrollY] = useState(0)
@@ -75,9 +74,6 @@ function Header() {
             ></div>
             {user ? (
                 <div className="flex justify-center items-center gap-8">
-                    {/* <button className="flex justify-center items-center border border-primary rounded-3xl h-8 px-4 py-2 text-primary hover:border-white hover:bg-black hover:text-white">
-                        <span className="text-sm font-medium hover:font-semibold">Upgrade</span>
-                    </button> */}
                     <div className="flex items-center relative gap-2 border-none cursor-pointer bg-[#0A0A0A] rounded-2xl h-8 pl-1 pr-4 text-white hover:bg-[#282828]">
                         <div
                             className="btn-menu-header w-7 h-7 rounded-full overflow-hidden"
@@ -104,10 +100,6 @@ function Header() {
                                 <li className="px-4 py-1 cursor-pointer hover:bg-58 hover:text-white">
                                     <Link to={config.routes.myplaylist}>Quản lý playlist</Link>
                                 </li>
-                                {/* <li className="px-4 py-1 cursor-pointer hover:bg-58 hover:text-white">
-                                    <Link to={'/'}>Quản lý bài hát</Link>
-                                </li>
-                                <div className="h-px mx-3 bg-primary opacity-70"></div> */}
                                 <li className="px-4 py-1 cursor-pointer hover:bg-58 hover:text-white">
                                     <button
                                         onClick={() => {
@@ -137,7 +129,6 @@ function Header() {
                     </Link>
                 </div>
             )}
-            {/* {scrollY >= 400 && <HeaderPlay />} */}
         </div>
     )
 }

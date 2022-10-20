@@ -78,7 +78,7 @@ function InfoForm() {
                         />
                     </div>
                 </label>
-                <span className="text-xs text-primary font-">Click on the picture to change the avatar</span>
+                <span className="text-xs text-primary font-">Nhấn vào ảnh nếu muốn thay đổi ảnh đại diện</span>
                 <input
                     id="avatarzone-file"
                     type="file"

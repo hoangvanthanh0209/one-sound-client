@@ -161,6 +161,10 @@ html *::-webkit-scrollbar-track {
     color: var(--active-color);
 }
 
+.transition-all-05 {
+    transition: all 0.5;
+}
+
 :root {
     /* --w-sidebar: 320px;
     --w-header: calc(100% - var(--w-sidebar));
@@ -246,7 +250,7 @@ html *::-webkit-scrollbar-track {
     }
 
     .btn-disabled {
-        @apply select-none opacity-70 cursor-no-drop;
+        @apply select-none opacity-70 cursor-no-drop pointer-events-none;
     }
 
     .card-desc {

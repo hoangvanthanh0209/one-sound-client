@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/categories/'
+const API_URL = 'https://one-sound-hvt.herokuapp.com/api/categories/'
 
 // get categories
 const getCategories = async () => {

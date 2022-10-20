@@ -1,16 +1,18 @@
 import ContextMenu from 'devextreme-react/context-menu'
 import 'devextreme/dist/css/dx.dark.css'
-import { useState } from 'react'
-import { FaEllipsisH, FaPause, FaPlay, FaRegHeart } from 'react-icons/fa'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { FaPause, FaRegHeart } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
+import { toast } from 'react-toastify'
 
 import images from '~/assets/images'
+import myError from '~/utils/error'
 import { setDataForm, showModal, showModalConfirm } from '~/redux/config/configSlice'
-import { likeSong } from '~/redux/song/songSlice'
-import { playlistSelector } from '~/redux/selector'
-import { getArtistById } from '~/redux/artist/artistSlice'
+import { playSong } from '~/redux/music/musicSlice'
+import { setPlaylistId, setUserId } from '~/redux/current/currentSlice'
+import songService from '~/redux/song/songService'
 
 function SongItem({
     data = {},
@@ -23,9 +25,9 @@ function SongItem({
     isPlay = false,
 }) {
     const dispatch = useDispatch()
-    const { currentPlaylist } = useSelector(playlistSelector)
 
     const [visibleContextMenu, setVisibleContextMenu] = useState(false)
+    const [error, setError] = useState('')
 
     const items = [{ text: 'Sửa' }, { text: 'Xóa' }]
 
@@ -60,19 +62,37 @@ function SongItem({
         dispatch(showModalConfirm({ id, model: 'song' }))
     }
 
+    const likeSong = async (id) => {
+        try {
+            const respon = await songService.likeSong(id)
+        } catch (error) {
+            console.log(error)
+            const message = myError.getError(error)
+            setError(message)
+        }
+    }
+
     const handleLikeSongBtnClick = () => {
-        dispatch(likeSong(data.id))
+        likeSong(data.id)
     }
 
     const handleArtistLinkBtnClick = () => {
-        dispatch(getArtistById(currentPlaylist.userId))
+        dispatch(setUserId(data.userId))
+    }
+
+    const handlePlaylistLinkBtnClick = () => {
+        dispatch(setPlaylistId(data.playlistId))
     }
 
     const handlePlaySong = () => {
         if (isPlay) {
-            console.log('zo')
+            dispatch(playSong({ song: data, index: index - 1 }))
         }
     }
+
+    useEffect(() => {
+        error && toast.error(error)
+    }, [error])
 
     return (
         <>
@@ -153,27 +173,21 @@ function SongItem({
                     </div>
                 </div>
                 <div className="flex justify-start items-center w-3/12 h-full px-2">
-                    {/* {isRedirectPlaylist ? (
-                        <Link to={`/playlist/${data.playlistSlug}`} className="song-row-link truncate hover:underline">
-                            {data.playlistName || 'playlist'}
+                    {isRedirectPlaylist ? (
+                        <Link
+                            to={`/playlist/${data.playlistSlug}`}
+                            className="song-row-link truncate hover:underline"
+                            onClick={handlePlaylistLinkBtnClick}
+                        >
+                            {data.playlistName || 'Unkown'}
                         </Link>
                     ) : (
                         <span className="song-row-link truncate">{data.playlistName || 'playlist'}</span>
-                    )} */}
-                    <span className="song-row-link truncate">{data.playlistName || 'playlist'}</span>
+                    )}
                 </div>
                 <div className="flex justify-start items-center w-2/12 h-full px-2">
                     <span>{moment(data.createdAt).fromNow()}</span>
                 </div>
-                {/* <div className="flex justify-center items-center gap-6 w-2/12 h-full px-2">
-                    <div className="song-row-icon w-5 h-5 opacity-0 hover:text-white">
-                        <FaRegHeart className="w-full h-full" />
-                    </div>
-                    <span>3:21</span>
-                    <div className="song-row-icon w-5 h-5 opacity-0 hover:text-white">
-                        <FaEllipsisH className="w-full h-full" />
-                    </div>
-                </div> */}
                 <div className="flex justify-center items-center gap-6 w-2/12 h-full px-2">
                     <span>
                         {data.likeCount} {data.likeCount > 1 ? 'likes' : 'like'}

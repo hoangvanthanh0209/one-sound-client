@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/songs/'
+const API_URL = 'https://one-sound-hvt.herokuapp.com/api/songs/'
 
 // get songs of playlist
 const getSongsByPlaylistId = async (playlistId) => {
@@ -9,7 +9,7 @@ const getSongsByPlaylistId = async (playlistId) => {
             playlistId: playlistId,
         },
     }
-    const res = await axios.get(API_URL + 'getSong', config)
+    const res = await axios.get(API_URL + 'getSongsByPlaylistId', config)
 
     return res.data
 }

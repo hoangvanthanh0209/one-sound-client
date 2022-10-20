@@ -4,10 +4,10 @@ const routes = {
     register: '/register',
     playlist: '/playlist/:slug',
     artist: '/artist/:slug',
-    me: '/me',
     myplaylist: '/me/playlist',
     mysong: '/me/playlist/:slug',
     search: '/search',
+    category: '/category/:slug',
 }
 
 export default routes

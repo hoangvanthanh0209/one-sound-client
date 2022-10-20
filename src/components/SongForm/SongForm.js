@@ -4,22 +4,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import images from '~/assets/images'
+import myError from '~/utils/error'
 import { hiddenModal } from '~/redux/config/configSlice'
-import { createSong, resetMe, updateSong } from '~/redux/me/meSlice'
-import { configSelector, meSelector } from '~/redux/selector'
+import { reloadSong, resetLoading, setLoading } from '~/redux/current/currentSlice'
+import { authSelector, configSelector, currentSelector } from '~/redux/selector'
+import meService from '~/redux/me/meService'
 
 function SongForm() {
     const dispatch = useDispatch()
     const {
-        modal: { form, data: songData },
+        modal: { data: songData },
     } = useSelector(configSelector)
-    const { currentPlaylist, isSuccessMe, isErrorMe, errorMessageMe } = useSelector(meSelector)
+    const { playlistIdMe } = useSelector(currentSelector)
+    const { user } = useSelector(authSelector)
+    const { token } = user
+
     const [newThumbnail, setNewThumbnail] = useState('')
     const [nameSong, setNameSong] = useState('')
     const [data, setData] = useState(songData)
 
     const [errorName, setErrorName] = useState('')
     const [errorMp3, setErrorMp3] = useState('')
+    const [error, setError] = useState('')
 
     const { thumbnail, name, mp3 } = data
 
@@ -47,56 +53,100 @@ function SongForm() {
         })
     }
 
-    const handleSubmit = () => {
+    const createSong = async () => {
+        try {
+            dispatch(setLoading())
+            let formData = new FormData()
+            thumbnail && formData.append('thumbnail', thumbnail)
+            mp3 && formData.append('mp3', mp3)
+            formData.append('name', name)
+
+            const requestStatus = await meService.createSong({ songData: formData, playlistId: playlistIdMe }, token)
+
+            if (requestStatus === 201) {
+                toast.success('Tạo mới thành công')
+                dispatch(hiddenModal())
+                dispatch(reloadSong())
+            }
+
+            dispatch(resetLoading())
+        } catch (error) {
+            console.log(error)
+            const message = myError.getError(error)
+            setError(message)
+        }
+    }
+
+    const updateSong = async () => {
+        try {
+            dispatch(setLoading())
+            let formData = new FormData()
+            formData.append('id', songData.id)
+            thumbnail && formData.append('thumbnail', thumbnail)
+            nameSong && mp3 && formData.append('mp3', mp3)
+            formData.append('name', name)
+
+            const requestStatus = await meService.updateSong(formData, token)
+
+            if (requestStatus === 201) {
+                toast.success('Thay đổi thành công')
+                dispatch(hiddenModal())
+                dispatch(reloadSong())
+            }
+
+            dispatch(resetLoading())
+        } catch (error) {
+            console.log(error)
+            const message = myError.getError(error)
+            setError(message)
+        }
+    }
+
+    const validationForm = () => {
+        let errorName, errorMp3
         if (typeof name === 'undefined') {
             setErrorName('Không được để trống trường này')
+            errorName = true
         } else {
             setErrorName('')
+            errorName = false
         }
 
         if (!mp3) {
             setErrorMp3('Bạn chưa chọn file')
+            errorMp3 = true
         } else {
             setErrorMp3('')
+            errorMp3 = false
         }
 
-        if (typeof name !== 'undefined' && mp3) {
-            const isExsit = Object.keys(songData).length === 0 && songData.constructor === Object
-            if (form === 'SongForm' && isExsit) {
-                let formData = new FormData()
-                thumbnail && formData.append('thumbnail', thumbnail)
-                mp3 && formData.append('mp3', mp3)
-                formData.append('name', name)
-                dispatch(createSong({ songData: formData, playlistId: currentPlaylist.id }))
-            } else if (form === 'SongForm' && !isExsit) {
-                let formData = new FormData()
-                formData.append('id', songData.id)
-                thumbnail && formData.append('thumbnail', thumbnail)
-                nameSong && mp3 && formData.append('mp3', mp3)
-                formData.append('name', name)
-                dispatch(updateSong(formData))
-            }
+        return errorName || errorMp3
+    }
+
+    const handleSubmit = async () => {
+        const isError = validationForm()
+
+        if (isError) {
+            return
+        }
+
+        const isNullData = Object.keys(songData).length === 0 && songData.constructor === Object
+        if (isNullData) {
+            createSong()
+        } else {
+            updateSong()
         }
     }
 
     useEffect(() => {
-        // cleanup
         return () => {
             newThumbnail && URL.revokeObjectURL(newThumbnail.preview)
         }
     }, [newThumbnail])
 
     useEffect(() => {
-        if (isErrorMe) {
-            toast.error(errorMessageMe)
-        }
-
-        if (isSuccessMe) {
-            toast.success('Tạo mới thành công')
-            dispatch(hiddenModal())
-            dispatch(resetMe())
-        }
-    }, [isErrorMe, isSuccessMe, errorMessageMe])
+        error && toast.error(error)
+    }, [error])
 
     return (
         <div className="flex flex-col justify-start items-center gap-4 w-[368px]">

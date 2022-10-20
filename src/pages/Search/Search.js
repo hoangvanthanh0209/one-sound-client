@@ -1,19 +1,26 @@
 import { useEffect, useRef, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 
+import myError from '~/utils/error'
 import { DashBoard } from '~/components'
-import { getArtistsByName, getTopArtistsFavourite, resetArtist } from '~/redux/artist/artistSlice'
-import { getPlaylistsByName, getTopPlaylistsFavourite, resetPlaylist } from '~/redux/playlist/playlistSlice'
-import { artistSelector, playlistSelector } from '~/redux/selector'
+import { resetColor } from '~/redux/config/configSlice'
+import artistService from '~/redux/artist/artistService'
+import playlistService from '~/redux/playlist/playlistService'
 
 function Search() {
     const dispatch = useDispatch()
-    const { playlists, isSuccessPlaylist } = useSelector(playlistSelector)
-    const { artists, isSuccessArtist } = useSelector(artistSelector)
-
     const [searchValue, setsearchValue] = useState('')
     const [type, setType] = useState('all')
+    const [playlists, setPlaylists] = useState([])
+    const [artists, setArtists] = useState([])
+    const [error, setError] = useState('')
+    const [filters, setFiters] = useState({
+        page: 1,
+        limit: 16,
+        name: '',
+    })
 
     const inputRef = useRef()
     const btnSearchRef = useRef()
@@ -29,28 +36,9 @@ function Search() {
     }
 
     const handleSearchBtnClick = () => {
-        const top = 16
-        if (type === 'playlist') {
-            if (searchValue) {
-                dispatch(getPlaylistsByName(searchValue))
-            } else {
-                dispatch(getTopPlaylistsFavourite(top))
-            }
-        } else if (type === 'artist') {
-            if (searchValue) {
-                dispatch(getArtistsByName(searchValue))
-            } else {
-                dispatch(getTopArtistsFavourite(top))
-            }
-        } else {
-            if (searchValue) {
-                dispatch(getPlaylistsByName(searchValue))
-                dispatch(getArtistsByName(searchValue))
-            } else {
-                dispatch(getTopPlaylistsFavourite(top))
-                dispatch(getTopArtistsFavourite(top))
-            }
-        }
+        setFiters((prevData) => {
+            return { ...prevData, name: searchValue }
+        })
     }
 
     const handleEnterKeyUp = (e) => {
@@ -59,11 +47,37 @@ function Search() {
         }
     }
 
+    const getPlaylists = async (filters) => {
+        try {
+            const respon = await playlistService.getPlaylistsForPage(filters)
+            setPlaylists(respon)
+        } catch (error) {
+            console.log(error)
+            const message = myError.getError(error)
+            setError(message)
+        }
+    }
+
+    const getArtists = async (filters) => {
+        try {
+            const respon = await artistService.getArtists(filters)
+            const { data } = respon
+            setArtists(data)
+        } catch (error) {
+            console.log(error)
+            const message = myError.getError(error)
+            setError(message)
+        }
+    }
+
     useEffect(() => {
-        const top = 16
-        dispatch(getTopPlaylistsFavourite(top))
-        dispatch(getTopArtistsFavourite(top))
+        dispatch(resetColor())
     }, [])
+
+    useEffect(() => {
+        getPlaylists(filters)
+        getArtists(filters)
+    }, [filters])
 
     useEffect(() => {
         const input = inputRef.current
@@ -76,12 +90,8 @@ function Search() {
     }, [inputRef])
 
     useEffect(() => {
-        isSuccessPlaylist && dispatch(resetPlaylist())
-    }, [playlists])
-
-    useEffect(() => {
-        isSuccessArtist && dispatch(resetArtist())
-    }, [artists])
+        error && toast.error(error)
+    }, [error])
 
     return (
         <>
@@ -150,11 +160,11 @@ function Search() {
                 </div>
             </div>
             <div className="flex flex-col gap-6 w-full">
-                {artists.length > 0 && (
-                    <DashBoard title="Nghệ sĩ nổi bật" data={artists} length={artists.length} type="artist" />
+                {artists.length > 0 && type !== 'playlist' && (
+                    <DashBoard title="Nghệ sĩ nổi bật" data={artists} type="artist" isShowMore={false} isLimit={true} />
                 )}
-                {playlists.length > 0 && (
-                    <DashBoard title="Playlist nổi bật" data={playlists} length={playlists.length} type="playlist" />
+                {playlists.length > 0 && type !== 'artist' && (
+                    <DashBoard title="Playlist nổi bật" data={playlists} isShowMore={false} isLimit={true} />
                 )}
             </div>
         </>

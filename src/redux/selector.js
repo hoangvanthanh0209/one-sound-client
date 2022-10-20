@@ -1,9 +1,6 @@
 export const configSelector = (state) => state.config
 export const authSelector = (state) => state.auth
-export const meSelector = (state) => state.me
 export const musicSelector = (state) => state.music
 export const categorySelector = (state) => state.category
 export const playlistSelector = (state) => state.playlist
-export const songSelector = (state) => state.song
-export const artistSelector = (state) => state.artist
 export const currentSelector = (state) => state.current

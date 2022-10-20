@@ -101,6 +101,10 @@ export const musicSlice = createSlice({
                 state.indexPlayedList.push(newIndex)
             }
         },
+        playSong: (state, action) => {
+            state.currentSong = action.payload.song
+            state.indexSong = action.payload.index
+        },
         setRepeat: (state, action) => {
             state.isRepeat = action.payload
         },
@@ -145,6 +149,7 @@ export const {
     prevSong,
     nextSongWithRandom,
     prevSongWithRandom,
+    playSong,
     setRepeat,
     setRandom,
     setIsPlaying,

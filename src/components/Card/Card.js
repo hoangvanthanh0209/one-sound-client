@@ -1,18 +1,16 @@
 import { useEffect } from 'react'
-import { FaSpotify, FaPlay } from 'react-icons/fa'
+import { FaMusic, FaPlay } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import images from '~/assets/images'
-import { resetArtist } from '~/redux/artist/artistSlice'
 import { setPlaylistId, setUserId } from '~/redux/current/currentSlice'
 import { playPlaylistById, resetMusic } from '~/redux/music/musicSlice'
-import { artistSelector, musicSelector } from '~/redux/selector'
+import { musicSelector } from '~/redux/selector'
 
 function Card({ type = 'playlist', data = {} }) {
     const dispatch = useDispatch()
     const { playlist, isSuccess } = useSelector(musicSelector)
-    const { currentArtist, isSuccessArtist } = useSelector(artistSelector)
 
     const handlePlayPlaylistBtnClick = () => {
         dispatch(playPlaylistById(data.id))
@@ -30,10 +28,6 @@ function Card({ type = 'playlist', data = {} }) {
         isSuccess && dispatch(resetMusic())
     }, [playlist])
 
-    useEffect(() => {
-        isSuccessArtist && dispatch(resetArtist())
-    }, [currentArtist])
-
     return (
         <div className="col-span-1 p-4 bg-[#282828] border-none rounded-md overflow-hidden cursor-pointer card hover:bg-[#383838]">
             <div className="relative">
@@ -44,13 +38,13 @@ function Card({ type = 'playlist', data = {} }) {
                 >
                     <img
                         className="w-full h-36 object-cover"
-                        src={data.thumbnail || (type === 'playlist' ? images.playlist : images.song)}
+                        src={data.thumbnail || (type === 'playlist' ? images.playlist : images.avatar)}
                         alt={type === 'playlist' ? data.name : data.artistName}
                     />
                 </div>
                 {type !== 'artist' && (
                     <div className="absolute top-2 left-2 w-4 h-4">
-                        <FaSpotify className="fill-white w-full h-full" />
+                        <FaMusic className="fill-white w-full h-full" />
                     </div>
                 )}
                 {data.countSong > 0 && (

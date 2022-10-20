@@ -1,5 +1,4 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { FaRegClock } from 'react-icons/fa'
 import { BiLike } from 'react-icons/bi'
 
 import { SongItem } from '~/components'
@@ -59,7 +58,6 @@ function ListSong({ data = [] }) {
                 </div>
                 <div className="flex justify-center items-center w-2/12 h-full px-2">
                     <div className="w-5 h-5">
-                        {/* <FaRegClock className="w-full h-full" /> */}
                         <BiLike className="w-full h-full" />
                     </div>
                 </div>
