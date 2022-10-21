@@ -13,6 +13,7 @@ const ranColor = () => {
 
 const initialState = {
     color: 'rgb(0, 0, 0)',
+    isShowList: false,
     modal: {
         isShow: false,
         title: '',
@@ -59,6 +60,12 @@ export const configSlice = createSlice({
         hiddenModalConfirm: (state) => {
             state.modalConfirm = initialState.modalConfirm
         },
+        setShowList: (state) => {
+            state.isShowList = true
+        },
+        hiddenShowList: (state) => {
+            state.isShowList = false
+        },
     },
 })
 
@@ -71,6 +78,8 @@ export const {
     clearDataForm,
     showModalConfirm,
     hiddenModalConfirm,
+    setShowList,
+    hiddenShowList,
 } = configSlice.actions
 
 export default configSlice.reducer

@@ -16,8 +16,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import images from '~/assets/images'
+import myError from '~/utils/error'
 import { SongItem } from '~/components'
-import { musicSelector } from '~/redux/selector'
+import { configSelector, musicSelector } from '~/redux/selector'
 import {
     nextSong,
     nextSongWithRandom,
@@ -27,8 +28,9 @@ import {
     setRandom,
     setRepeat,
 } from '~/redux/music/musicSlice'
-import { getArtistById } from '~/redux/artist/artistSlice'
-import { likeSong } from '~/redux/song/songSlice'
+import { hiddenShowList, setShowList } from '~/redux/config/configSlice'
+import { setUserId } from '~/redux/current/currentSlice'
+import songService from '~/redux/song/songService'
 
 function MusicPlayer() {
     const {
@@ -41,13 +43,16 @@ function MusicPlayer() {
         isRandom: isRandomSlice,
     } = useSelector(musicSelector)
     const dispatch = useDispatch()
-    const [show, setShow] = useState(false)
+    const { isShowList } = useSelector(configSelector)
+
+    // const [show, setShow] = useState(false)
     const [duration, setDuration] = useState('')
     const [currentTimeSong, setCurrentTimeSong] = useState('00:00')
     const [timeSong, setTimeSong] = useState(0)
     const [volume, setVolume] = useState(100)
     const [isRepeat, setIsRepeat] = useState(isRepeatSlice)
     const [isRandom, setIsRandom] = useState(isRandomSlice)
+    const [error, setError] = useState('')
 
     const { name, singer, thumbnail, mp3 } = currentSong
 
@@ -60,17 +65,26 @@ function MusicPlayer() {
     const nextBtnRef = useRef()
 
     const handleShow = () => {
+        // if (Object.keys(playlist).length === 0 && playlist.constructor === Object) {
+        //     toast.error('Hiện không có playlist nào đang được phát')
+        // } else {
+        //     if (show) {
+        //         setShow(false)
+        //         bgRef.current.classList.add('translate-y-spacing-hidden-music-player-list-song')
+        //     } else {
+        //         setShow(true)
+        //         bgRef.current.classList.remove('translate-y-spacing-hidden-music-player-list-song')
+        //     }
+        // }
         if (Object.keys(playlist).length === 0 && playlist.constructor === Object) {
             toast.error('Hiện không có playlist nào đang được phát')
-        } else {
-            if (show) {
-                setShow(false)
-                bgRef.current.classList.add('translate-y-spacing-hidden-music-player-list-song')
-            } else {
-                setShow(true)
-                bgRef.current.classList.remove('translate-y-spacing-hidden-music-player-list-song')
-            }
+            return
         }
+        if (isShowList) {
+            dispatch(hiddenShowList())
+            return
+        }
+        dispatch(setShowList())
     }
 
     const handleChangeTimeSong = (e) => {
@@ -150,11 +164,21 @@ function MusicPlayer() {
     }
 
     const handleArtistLinkBtnClick = () => {
-        dispatch(getArtistById(playlist.userId))
+        dispatch(setUserId(playlist.userId))
+    }
+
+    const likeSong = async (id) => {
+        try {
+            const respon = await songService.likeSong(id)
+        } catch (error) {
+            console.log(error)
+            const message = myError.getError(error)
+            setError(message)
+        }
     }
 
     const handleLikeSongBtnClick = () => {
-        dispatch(likeSong(currentSong.id))
+        likeSong(currentSong.id)
     }
 
     const formatTime = (secNumber) => {
@@ -235,12 +259,18 @@ function MusicPlayer() {
         }
     }, [isPlaying, currentSong, audioRef, timeSongRef, indexSong])
 
+    useEffect(() => {
+        error && toast.error(error)
+    }, [error])
+
     return (
         <div className="flex items-center relative bg-[#181818] h-full px-4">
             <audio ref={audioRef} id="audio" src={mp3}></audio>
             <div
                 ref={bgRef}
-                className="list-song-custom absolute -top-t-music-player-list-song left-l-music-player-list-song w-w-music-player-list-song h-h-music-player-list-song bg-[#1C1C1C] overflow-hidden translate-y-spacing-hidden-music-player-list-song"
+                className={`list-song-custom absolute -top-t-music-player-list-song left-l-music-player-list-song w-w-music-player-list-song h-h-music-player-list-song bg-[#1C1C1C] overflow-hidden ${
+                    isShowList ? '' : 'translate-y-spacing-hidden-music-player-list-song'
+                }`}
             >
                 <div className="px-8 w-full h-full">
                     {Object.keys(playlist).length > 0 && playlist.constructor === Object && (
@@ -282,7 +312,7 @@ function MusicPlayer() {
                             <div className="flex flex-col px-4 w-60">
                                 <span className="text-sm text-white truncate">{name}</span>
                                 <Link
-                                    to={`/artist/${playlist.userSlug}`}
+                                    to={`/artist/${currentSong.userSlug}`}
                                     className="text-xs text-primary hover:underline"
                                     onClick={handleArtistLinkBtnClick}
                                 >
