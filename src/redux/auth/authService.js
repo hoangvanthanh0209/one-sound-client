@@ -1,7 +1,9 @@
 import axios from 'axios'
 
-const API_URL_USER = 'https://one-sound-hvt.herokuapp.com/api/users/'
-const API_URL_ME = 'https://one-sound-hvt.herokuapp.com/api/me/'
+// const API_URL_USER = 'https://one-sound-hvt.herokuapp.com/api/users/'
+// const API_URL_ME = 'https://one-sound-hvt.herokuapp.com/api/me/'
+const API_URL_USER = 'https://one-sound-server.onrender.com/api/users/'
+const API_URL_ME = 'https://one-sound-server.onrender.com/api/me/'
 
 // Register user
 const register = async (userData) => {

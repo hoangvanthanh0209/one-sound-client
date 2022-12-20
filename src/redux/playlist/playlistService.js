@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'https://one-sound-hvt.herokuapp.com/api/playlists/'
+// const API_URL = 'https://one-sound-hvt.herokuapp.com/api/playlists/'
+const API_URL = 'https://one-sound-server.onrender.com/api/playlists/'
 
 // get playlists
 const getPlaylists = async () => {

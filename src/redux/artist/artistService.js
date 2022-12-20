@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'https://one-sound-hvt.herokuapp.com/api/users/'
+// const API_URL = 'https://one-sound-hvt.herokuapp.com/api/users/'
+const API_URL = 'https://one-sound-server.onrender.com/api/users/'
 
 // get artist by id
 const getArtistById = async (artistId) => {

@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'https://one-sound-hvt.herokuapp.com/api/me/'
+// const API_URL = 'https://one-sound-hvt.herokuapp.com/api/me/'
+const API_URL = 'https://one-sound-server.onrender.com/api/me/'
 
 const config = (token) => {
     return {
